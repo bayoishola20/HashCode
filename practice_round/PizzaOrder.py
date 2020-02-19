@@ -41,8 +41,8 @@ if __name__ == "__main__":
         thread_list.append(thread)
         thread.start()
 
-    for thread in thread_list:
-        thread.join()
+        for thread in thread_list:
+            thread.join()
 
-    # PizzaOrder(f"input/{input_files[i]}.in",
-    #            f"output/{input_files[i]}.out")
+        # PizzaOrder(f"input/{input_files[i]}.in",
+        #            f"output/{input_files[i]}.out")
