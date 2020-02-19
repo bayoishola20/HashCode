@@ -30,17 +30,29 @@ class ReadInputHandler:
         if self.pizza_type_slices[-1] > self.pizza_slice_max:
             return None
 
-        order_pizza = []
+        step = 0
+        all_combinations = []
+        deficit = []
 
         for i in range((self.pizza_types - 1), -1, -1):
+            pizza_needed = self.pizza_slice_max
+            order_pizza = []
 
-            if self.pizza_slice_max - self.pizza_type_slices[i] > 0:
-                order_pizza.append(i)
-                self.pizza_slice_max -= self.pizza_type_slices[i]
+            for j in range(((self.pizza_types - 1) - step), -1, -1):
+                if pizza_needed - self.pizza_type_slices[j] >= 0:
+                    order_pizza.append(j)
+                    pizza_needed -= self.pizza_type_slices[j]
 
-        order_pizza.reverse()
+            deficit.append(pizza_needed)
+            all_combinations.append(order_pizza)
+            step += 1
+
+        optimized = deficit.index(min(deficit))
+
+        optimized = all_combinations[optimized]
+        optimized.reverse()
 
         print(
-            f"\nPizza slice deficit for {self.filname} is: {self.pizza_slice_max}")
+            f"\nPizza slice deficit for {self.filname} is: {min(deficit)}")
 
-        return (len(order_pizza), order_pizza)
+        return (len(optimized), optimized)
