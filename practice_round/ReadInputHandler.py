@@ -30,32 +30,50 @@ class ReadInputHandler:
         if self.pizza_type_slices[-1] > self.pizza_slice_max:
             return None
 
-        step = 0
+        pizza_varieties, pizza_type, deficit = self.calculate(
+            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, 1, 1)
+
+        print(
+            f"\nPizza slice deficit for {self.filname} is: {deficit}")
+
+        return (pizza_varieties, pizza_type)
+
+    def calculate(self, max_required, types_available, slices_in_pizza, direction, step):
+
+        kernel = 0
         all_combinations = []
         deficit = []
+        optimized = None
 
-        for i in range((self.pizza_types - 1), -1, -1):
-            pizza_needed = self.pizza_slice_max
+        if direction == -1:
+            length_types = types_available - 1
+        else:
+            length_types = types_available
+
+        print(length_types, direction, step)
+
+        for i in range(length_types, direction, step):
+            pizza_needed = max_required
+            print(pizza_needed)
             order_pizza = []
 
-            for j in range(((self.pizza_types - 1) - step), -1, -1):
-                if pizza_needed - self.pizza_type_slices[j] >= 0:
+            for j in range((length_types - kernel), direction, step):
+                if pizza_needed - slices_in_pizza[j] >= 0:
                     order_pizza.append(j)
-                    pizza_needed -= self.pizza_type_slices[j]
+                    pizza_needed -= slices_in_pizza[j]
+
+            print(pizza_needed)
 
             deficit.append(pizza_needed)
             all_combinations.append(order_pizza)
-            step += 1
 
-        optimized = deficit.index(min(deficit))
+            kernel += 1
 
-        optimized = all_combinations[optimized]
-        optimized.reverse()
+        # optimized = deficit.index(min(deficit))
+        # optimized = all_combinations[optimized]
 
-        print(
-            f"\nPizza slice deficit for {self.filname} is: {min(deficit)}")
+        # optimized.reverse()
 
-        return (len(optimized), optimized)
+        return (1, 2, 1)
 
-    def compare_feed(self, max_required, type_available, slices_in_pizza):
-        pass
+        # return (len(optimized), optimized, min(deficit))

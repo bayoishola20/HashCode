@@ -25,8 +25,8 @@ class PizzaOrder:
         pih = ReadInputHandler(input_file)
         output = pih.solve()
 
-        if output != None:
-            woh = WriteOutputHandler(output_file, output)
+        # if output != None:
+        #     woh = WriteOutputHandler(output_file, output)
 
 
 if __name__ == "__main__":
