@@ -56,3 +56,6 @@ class ReadInputHandler:
             f"\nPizza slice deficit for {self.filname} is: {min(deficit)}")
 
         return (len(optimized), optimized)
+
+    def compare_feed(self, max_required, type_available, slices_in_pizza):
+        pass

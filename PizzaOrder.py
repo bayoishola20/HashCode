@@ -30,19 +30,21 @@ class PizzaOrder:
 
 
 if __name__ == "__main__":
-    input_files = ["a_example", "b_small",
-                   "c_medium", "d_quite_big", "e_also_big"]
+    # input_files = ["a_example", "b_small",
+    #                "c_medium", "d_quite_big", "e_also_big"]
+
+    input_files = ["b_small"]
 
     thread_list = []
 
     for i in range(len(input_files)):
-        thread = Thread(target=PizzaOrder, args=(f"input/{input_files[i]}.in",
-                                                 f"output/{input_files[i]}.out"))
-        thread_list.append(thread)
-        thread.start()
+        # thread = Thread(target=PizzaOrder, args=(f"input/{input_files[i]}.in",
+        #                                          f"output/{input_files[i]}.out"))
+        # thread_list.append(thread)
+        # thread.start()
 
-        for thread in thread_list:
-            thread.join()
+        # for thread in thread_list:
+        #     thread.join()
 
-        # PizzaOrder(f"input/{input_files[i]}.in",
-        #            f"output/{input_files[i]}.out")
+        PizzaOrder(f"input/{input_files[i]}.in",
+                   f"output/{input_files[i]}.out")
