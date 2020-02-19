@@ -9,15 +9,16 @@
 # -------------------------------------------------------------------------------
 
 from pathlib import Path
-import numpy as np
 
 
 class ReadInputHandler:
     def __init__(self, filename):
-        if filename != None:
-            print(f"\n++++++++ Reading input from FILE:  {filename} ++++++++")
+        self.filname = filename
+        if self.filname != None:
+            print(
+                f"\n++++++++ Reading input from FILE:  {self.filname} ++++++++")
 
-            with open(filename, "r") as f:
+            with open(self.filname, "r") as f:
                 data = f.readlines()
                 data = [d.strip() for d in data]
 
@@ -38,5 +39,8 @@ class ReadInputHandler:
                 self.pizza_slice_max -= self.pizza_type_slices[i]
 
         order_pizza.reverse()
+
+        print(
+            f"\nPizza slice deficit for {self.filname} is: {self.pizza_slice_max}")
 
         return (len(order_pizza), order_pizza)
