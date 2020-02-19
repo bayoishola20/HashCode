@@ -25,8 +25,8 @@ class PizzaOrder:
         pih = ReadInputHandler(input_file)
         output = pih.solve()
 
-        # if output != None:
-        #     woh = WriteOutputHandler(output_file, output)
+        if output != None:
+            woh = WriteOutputHandler(output_file, output)
 
 
 if __name__ == "__main__":
@@ -38,13 +38,13 @@ if __name__ == "__main__":
     thread_list = []
 
     for i in range(len(input_files)):
-        # thread = Thread(target=PizzaOrder, args=(f"input/{input_files[i]}.in",
-        #                                          f"output/{input_files[i]}.out"))
-        # thread_list.append(thread)
-        # thread.start()
+        thread = Thread(target=PizzaOrder, args=(f"input/{input_files[i]}.in",
+                                                 f"output/{input_files[i]}.out"))
+        thread_list.append(thread)
+        thread.start()
 
-        # for thread in thread_list:
-        #     thread.join()
+        for thread in thread_list:
+            thread.join()
 
-        PizzaOrder(f"input/{input_files[i]}.in",
-                   f"output/{input_files[i]}.out")
+        # PizzaOrder(f"input/{input_files[i]}.in",
+        #            f"output/{input_files[i]}.out")
