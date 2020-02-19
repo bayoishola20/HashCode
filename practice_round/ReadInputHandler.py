@@ -31,49 +31,99 @@ class ReadInputHandler:
             return None
 
         pizza_varieties, pizza_type, deficit = self.calculate(
-            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, 1, 1)
+            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, "forward", "backward")
+
+        backward_backward = self.calculate(
+            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, "backward", "backward")
+
+        backward_forward = self.calculate(
+            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, "backward", "forward")
+
+        forward_backward = self.calculate(
+            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, "forward", "backward")
+
+        forward_forward = self.calculate(
+            self.pizza_slice_max, self.pizza_types, self.pizza_type_slices, "forward", "forward")
+
+        results = [backward_backward[2], backward_forward[2],
+                   forward_backward[2], forward_forward[2]]
+
+        print(results)
 
         print(
             f"\nPizza slice deficit for {self.filname} is: {deficit}")
 
         return (pizza_varieties, pizza_type)
 
-    def calculate(self, max_required, types_available, slices_in_pizza, direction, step):
+    def calculate(self, max_required, types_available, slices_in_pizza, direction, window):
 
         kernel = 0
         all_combinations = []
         deficit = []
         optimized = None
 
-        if direction == -1:
-            length_types = types_available - 1
+        if direction == "backward":
+            if window == "backward":
+                for i in range(types_available - 1, -1, -1):
+                    pizza_needed = max_required
+                    order_pizza = []
+
+                    for j in range((types_available - 1 - kernel), -1, -1):
+                        if pizza_needed - slices_in_pizza[j] >= 0:
+                            order_pizza.append(j)
+                            pizza_needed -= slices_in_pizza[j]
+
+                    deficit.append(pizza_needed)
+                    all_combinations.append(order_pizza)
+                    kernel += 1
+
+            else:
+                for i in range(types_available - 1, -1, -1):
+                    pizza_needed = max_required
+                    order_pizza = []
+
+                    for j in range((types_available - kernel)):
+                        if pizza_needed - slices_in_pizza[j] >= 0:
+                            order_pizza.append(j)
+                            pizza_needed -= slices_in_pizza[j]
+
+                    deficit.append(pizza_needed)
+                    all_combinations.append(order_pizza)
+                    kernel += 1
         else:
-            length_types = types_available
+            if window == "backward":
+                for i in range(types_available):
+                    pizza_needed = max_required
+                    order_pizza = []
 
-        print(length_types, direction, step)
+                    for j in range((types_available - 1 - kernel), -1, -1):
+                        if pizza_needed - slices_in_pizza[j] >= 0:
+                            order_pizza.append(j)
+                            pizza_needed -= slices_in_pizza[j]
 
-        for i in range(length_types, direction, step):
-            pizza_needed = max_required
-            print(pizza_needed)
-            order_pizza = []
+                    deficit.append(pizza_needed)
+                    all_combinations.append(order_pizza)
+                    kernel += 1
 
-            for j in range((length_types - kernel), direction, step):
-                if pizza_needed - slices_in_pizza[j] >= 0:
-                    order_pizza.append(j)
-                    pizza_needed -= slices_in_pizza[j]
+            else:
+                for i in range(types_available):
+                    pizza_needed = max_required
+                    order_pizza = []
 
-            print(pizza_needed)
+                    for j in range((types_available - kernel)):
+                        if pizza_needed - slices_in_pizza[j] >= 0:
+                            order_pizza.append(j)
+                            pizza_needed -= slices_in_pizza[j]
 
-            deficit.append(pizza_needed)
-            all_combinations.append(order_pizza)
+                    deficit.append(pizza_needed)
+                    all_combinations.append(order_pizza)
+                    kernel += 1
 
-            kernel += 1
+        optimized = deficit.index(min(deficit))
+        optimized = all_combinations[optimized]
 
-        # optimized = deficit.index(min(deficit))
-        # optimized = all_combinations[optimized]
+        optimized.reverse()
 
-        # optimized.reverse()
+        # return (1, 2, 1)
 
-        return (1, 2, 1)
-
-        # return (len(optimized), optimized, min(deficit))
+        return (len(optimized), optimized, min(deficit))

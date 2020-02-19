@@ -30,10 +30,10 @@ class PizzaOrder:
 
 
 if __name__ == "__main__":
-    # input_files = ["a_example", "b_small",
-    #                "c_medium", "d_quite_big", "e_also_big"]
+    input_files = ["a_example", "b_small",
+                   "c_medium", "d_quite_big", "e_also_big"]
 
-    input_files = ["b_small"]
+    # input_files = ["b_small"]
 
     thread_list = []
 
