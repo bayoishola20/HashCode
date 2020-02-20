@@ -10,23 +10,13 @@
 # -------------------------------------------------------------------------------
 
 
-import os
 from threading import Thread
-
-from ReadInputHandler import ReadInputHandler
-from WriteOutputHandler import WriteOutputHandler
+from handlers.OptimizationHandler import OptimizationHandler
 
 
 class PizzaOrder:
     def __init__(self, input_file=None, output_file=None):
-        if not os.path.isdir("output"):
-            os.mkdir("output")
-
-        pih = ReadInputHandler(input_file)
-        output = pih.solve()
-
-        if output != None:
-            woh = WriteOutputHandler(output_file, output)
+        OptimizationHandler(input_file, output_file)
 
 
 if __name__ == "__main__":

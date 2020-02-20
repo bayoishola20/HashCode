@@ -9,22 +9,25 @@
 # -------------------------------------------------------------------------------
 
 from pathlib import Path
+import os
 
 
 class WriteOutputHandler:
     def __init__(self, filename, output):
         # validate filename and output isn't None
         if filename != None and output != None:
+            if not os.path.isdir("output"):
+                os.mkdir("output")
+
             print(f"\n++++++++ Writing output to FILE: {filename} ++++++++")
             # write into output file
             with open(filename, "w+") as f:
                 f.write(f"{output[0]}\n")
 
-                # index output
-                for i, pizza in enumerate(output[1]):
+                for i, result in enumerate(output[1]):
                     if i < len(output[1]) - 1:
-                        f.write(f"{pizza} ")
+                        f.write(f"{result} ")
                     else:
-                        f.write(f"{pizza}\n")
+                        f.write(f"{result}\n")
 
             f.close()
