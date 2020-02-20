@@ -14,12 +14,13 @@ import os
 
 class WriteOutputHandler:
     def __init__(self, filename, output):
+        # validate filename and output isn't None
         if filename != None and output != None:
             if not os.path.isdir("output"):
                 os.mkdir("output")
 
             print(f"\n++++++++ Writing output to FILE: {filename} ++++++++")
-
+            # write into output file
             with open(filename, "w+") as f:
                 f.write(f"{output[0]}\n")
 
