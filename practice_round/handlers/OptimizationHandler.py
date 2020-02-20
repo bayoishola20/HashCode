@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------
-# Name:        ReadInputHandler.py
+# Name:        OptimizationHandler.py
 # Purpose:     Optimization problem
 #
 # Author:      Team Zeus
@@ -8,23 +8,20 @@
 #
 # -------------------------------------------------------------------------------
 
-from pathlib import Path
+
+from handlers.ReadInputHandler import ReadInputHandler
+from handlers.WriteOutputHandler import WriteOutputHandler
 
 
-class ReadInputHandler:
-    def __init__(self, filename):
-        self.filname = filename
-        if self.filname != None:
-            print(
-                f"\n++++++++ Reading input from FILE:  {self.filname} ++++++++")
+class OptimizationHandler(ReadInputHandler):
+    def __init__(self, input_file, output_file):
 
-            with open(self.filname, "r") as f:
-                data = f.readlines()
-                data = [d.strip() for d in data]
+        super().__init__(input_file)
 
-                self.pizza_slice_max, self.pizza_types = map(
-                    int, data[0].split(" "))
-                self.pizza_type_slices = list(map(int, data[1].split(" ")))
+        output = self.solve()
+
+        if output != None:
+            WriteOutputHandler(output_file, output)
 
     def solve(self):
         if self.pizza_type_slices[-1] > self.pizza_slice_max:
